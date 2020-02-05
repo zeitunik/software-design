@@ -4,6 +4,15 @@ struct Point
 	float _y;
 	Point(float x, float y): _x(x), _y(y) {}
 	Point(Point p): _x(p._x), _y(p._y) {}
+	void operator+=(const Point& p)
+	{	
+		_x += p._x;
+		_y += p._y;
+	}
+	Point operator+(const Point& p) const
+	{
+		return {_x + p._x, _y + p._y};
+	}
 };
 
 
