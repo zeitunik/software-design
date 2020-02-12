@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 
 struct Point
@@ -79,7 +80,7 @@ class Path : public Shape{
 
 namespace utils {
 
-void complex_transform(Shape* anything) {
+void complex_transform(std::shared_ptr<Shape> anything) {
     anything->move(Point(5, 5));
     anything->move(Point(0, 10));
 }
@@ -92,8 +93,8 @@ void other_transforms(Shape& anything) {
 
 int main() {
     Point top_left(10, 10), bottom_right(100, 100);
-    Rectangle r = {top_left, bottom_right};
-    Shape* s = &r;
+    auto r = std::make_shared<Rectangle>(top_left, bottom_right);
+    auto s = std::dynamic_pointer_cast<Shape>(r);
     utils::complex_transform(s);
-    r.draw();
+    r->draw();
 }
