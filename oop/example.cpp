@@ -39,6 +39,8 @@ class Shape {
     virtual void move(const Point& vector) = 0;
 };
 
+int Shape::ref_count = 0;
+
 
 class Rectangle : public Shape{
     public:
@@ -77,9 +79,9 @@ class Path : public Shape{
 
 namespace utils {
 
-void complex_transform(Shape& anything) {
-    anything.move(Point(5, 5));
-    anything.move(Point(0, 10));
+void complex_transform(Shape* anything) {
+    anything->move(Point(5, 5));
+    anything->move(Point(0, 10));
 }
 
 void other_transforms(Shape& anything) {
@@ -91,6 +93,7 @@ void other_transforms(Shape& anything) {
 int main() {
     Point top_left(10, 10), bottom_right(100, 100);
     Rectangle r = {top_left, bottom_right};
-    utils::complex_transform(r);
+    Shape* s = &r;
+    utils::complex_transform(s);
     r.draw();
 }
